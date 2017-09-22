@@ -13,23 +13,18 @@
 // 5. Subscribe your page to the Webhooks using verify_token and `https://<your_ngrok_io>/webhook` as callback URL.
 // 6. Talk to your bot on Messenger!
 
-const bodyParser = require('body-parser');
-const crypto = require('crypto');
-const express = require('express');
-const fetch = require('node-fetch');
-const request = require('request');
+const bodyParser = require('body-parser'),
+      crypto = require('crypto'),
+      express = require('express'),
+      fetch = require('node-fetch'),
+      request = require('request'),
+      { Wit, log } = require('node-wit');
 
-const Wit = require('node-wit').Wit;
-const log = require('node-wit').log;
-
-// Webserver parameter
 const PORT = process.env.PORT || 8445;
 
-// Wit.ai parameters
 const WIT_TOKEN = process.env.WIT_TOKEN;
-
-// Messenger API parameters
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
+
 if (!FB_PAGE_ACCESS_TOKEN) { throw new Error('missing FB_PAGE_ACCESS_TOKEN') }
 
 let FB_VERIFY_TOKEN = null;
@@ -51,13 +46,15 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message: { text },
   });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_ACCESS_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+
+  const url = `https://graph.facebook.com/me/messages?access_token=${encodeURIComponent(FB_PAGE_ACCESS_TOKEN)}`;
+
+  return fetch(url, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body,
   })
-  .then(rsp => rsp.json())
+  .then(res => res.json())
   .then(json => {
     if (json.error && json.error.message) {
       throw new Error(json.error.message);
