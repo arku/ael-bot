@@ -40,7 +40,7 @@ const fbMessage = (id, text) => {
     message: { text },
   });
 
-  const url = `https://graph.facebook.com/me/messages?access_token=${encodeURIComponent(FB_PAGE_ACCESS_TOKEN)}`;
+  const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${encodeURIComponent(FB_PAGE_ACCESS_TOKEN)}`;
 
   return fetch(url, {
     method: 'POST',
