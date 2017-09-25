@@ -124,7 +124,6 @@ const actions = {
 // Setting up our bot
 const wit = new Wit({
   accessToken: WIT_TOKEN,
-  actions,
   logger: new log.Logger(log.INFO)
 });
 
@@ -235,7 +234,7 @@ app.post('/webhook', (req, res) => {
           // Let's forward the message to the Wit.ai Bot Engine
           // This will run all actions until our bot has nothing left to do
           handleMessage(text)
-          .then(console.log)
+          .then(response => fbMessage(sender, response))
           .catch(console.err)
 
           // wit.runActions(
