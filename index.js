@@ -182,8 +182,6 @@ app.post('/webhook', (req, res) => {
   data.entry.forEach(entry => {
     entry.messaging.forEach(event => {
       if (event.message && !event.message.is_echo) {
-        // Yay! We got a new message!
-        // We retrieve the Facebook user ID of the sender
         const sender = event.sender.id;
 
         // We retrieve the user's current session, or create one if it doesn't exist
@@ -194,15 +192,9 @@ app.post('/webhook', (req, res) => {
         const {text, attachments} = event.message;
 
         if (attachments) {
-          // We received an attachment
-          // Let's reply with an automatic message
           fbMessage(sender, 'Sorry I can only process text messages for now.')
           .catch(console.error);
         } else if (text) {
-          // We received a text message
-
-          // Let's forward the message to the Wit.ai Bot Engine
-          // This will run all actions until our bot has nothing left to do
           handleMessage(text)
           .then(response => fbMessage(sender, response))
           .catch(console.err)
