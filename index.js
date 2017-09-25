@@ -14,7 +14,6 @@
 // 6. Talk to your bot on Messenger!
 
 const bodyParser = require('body-parser'),
-      crypto = require('crypto'),
       express = require('express'),
       fetch = require('node-fetch'),
       request = require('request'),
@@ -27,13 +26,7 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
 if (!FB_PAGE_ACCESS_TOKEN) { throw new Error('missing FB_PAGE_ACCESS_TOKEN') }
 
-let FB_VERIFY_TOKEN = null;
-
-crypto.randomBytes(8, (err, buff) => {
-  if (err) throw err;
-  FB_VERIFY_TOKEN = buff.toString('hex');
-  console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
-});
+let FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
