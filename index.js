@@ -15,6 +15,8 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
 if (!FB_PAGE_ACCESS_TOKEN) { throw new Error('missing FB_PAGE_ACCESS_TOKEN') }
+if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_VERIFY_TOKEN') }
+if (!WIT_TOKEN) { throw new Error('WIT_TOKEN') }
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
