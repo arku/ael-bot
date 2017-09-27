@@ -125,16 +125,7 @@ const firstEntity = (entities, name)  => {
     entities[name][0];
 }
 
-// Starting our webserver and putting it all together
 const app = express();
-
-app.use(({method, url}, rsp, next) => {
-  rsp.on('finish', () => {
-    console.log(`${rsp.statusCode} ${method} ${url}`);
-  });
-  next();
-});
-
 app.use(bodyParser.json());
 
 // Webhook setup
