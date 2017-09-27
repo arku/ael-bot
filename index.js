@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 8445;
 
 const WIT_TOKEN = process.env.WIT_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
-const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 if (!FB_PAGE_ACCESS_TOKEN) { throw new Error('missing FB_PAGE_ACCESS_TOKEN') }
-if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_VERIFY_TOKEN') }
+if (!VERIFY_TOKEN) { throw new Error('missing VERIFY_TOKEN') }
 if (!WIT_TOKEN) { throw new Error('WIT_TOKEN') }
 
 // ----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ app.use(bodyParser.json());
 // Webhook setup
 app.get('/webhook', (req, res) => {
   if (req.query['hub.mode'] === 'subscribe' &&
-    req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
+    req.query['hub.verify_token'] === VERIFY_TOKEN) {
     res.send(req.query['hub.challenge']);
   } else {
     res.sendStatus(400);
